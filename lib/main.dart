@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sprinter_mobile/pages/sign_up_page.dart';
+import 'package:sprinter_mobile/pages/login_page.dart';
 import 'package:sprinter_mobile/themes.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const SignUpPage(),
+      home: const LoginPage(),
       theme: lightTheme,
       darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
