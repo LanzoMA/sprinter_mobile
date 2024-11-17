@@ -1,8 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
 import 'package:sprinter_mobile/pages/home_page.dart';
 import 'package:sprinter_mobile/pages/login_page.dart';
+import 'package:sprinter_mobile/utils/constants.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -18,8 +18,6 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController confirmPasswordController = TextEditingController();
 
   void signUp() async {
-    final Dio dio = Dio();
-
     final String email = emailController.text.trim();
     final String username = usernameController.text.trim();
     final String password = passwordController.text.trim();
@@ -42,7 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
     try {
       final response = await dio.post(
-        'http://192.168.223.200:5000/register',
+        '$url/register',
         data: data,
       );
 

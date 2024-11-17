@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
 import 'package:sprinter_mobile/pages/home_page.dart';
 import 'package:sprinter_mobile/pages/sign_up_page.dart';
+import 'package:sprinter_mobile/utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,19 +15,30 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void login() {
+  void login() async {
     final String email = emailController.text;
     final String password = passwordController.text;
 
     if (email.isEmpty || password.isEmpty) return;
 
-    // HTTP request
+    final Map<String, String> data = {
+      'email': email,
+      'password': password,
+    };
 
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const HomePage(),
-      ),
-    );
+    try {
+      final response = await dio.post('$url/login', data: data);
+
+      if (response.statusCode != 200) return;
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
