@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
 import 'package:sprinter_mobile/pages/home_page.dart';
@@ -16,7 +17,9 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  void signUp() {
+  void signUp() async {
+    final Dio dio = Dio();
+
     final String email = emailController.text.trim();
     final String username = usernameController.text.trim();
     final String password = passwordController.text.trim();
@@ -31,11 +34,28 @@ class _SignUpPageState extends State<SignUpPage> {
     if (password != confirmPassword) return;
     if (password.length < 8) return;
 
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const HomePage(),
-      ),
-    );
+    final Map<String, String> data = {
+      'email': email,
+      'username': username,
+      'password': password,
+    };
+
+    try {
+      final response = await dio.post(
+        'http://192.168.223.200:5000/register',
+        data: data,
+      );
+
+      if (response.statusCode != 200) return;
+
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => const HomePage(),
+        ),
+      );
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
