@@ -15,11 +15,24 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  String emailErrorMessage = '';
+  String passwordErrorMessage = '';
+
   void login() async {
+    setState(() {
+      emailErrorMessage = passwordErrorMessage = '';
+    });
+
     final String email = emailController.text;
     final String password = passwordController.text;
 
-    if (email.isEmpty || password.isEmpty) return;
+    if (email.isEmpty) emailErrorMessage = 'No email provided';
+    if (password.isEmpty) passwordErrorMessage = 'No password provided';
+
+    if (email.isEmpty || password.isEmpty) {
+      setState(() {});
+      return;
+    }
 
     final Map<String, String> data = {
       'email': email,
@@ -27,9 +40,7 @@ class _LoginPageState extends State<LoginPage> {
     };
 
     try {
-      final response = await dio.post('$url/login', data: data);
-
-      if (response.statusCode != 200) return;
+      await dio.post('$url/login', data: data);
 
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -38,6 +49,9 @@ class _LoginPageState extends State<LoginPage> {
       );
     } catch (error) {
       print(error);
+      setState(() {
+        passwordErrorMessage = 'Incorrect username/password';
+      });
     }
   }
 
@@ -50,22 +64,44 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text('Login'),
-            const SizedBox(height: 16),
-            SprinterTextField(
-              hintText: 'Email',
-              controller: emailController,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: SprinterTextField(
+                hintText: 'Email',
+                controller: emailController,
+              ),
+            ),
+            Visibility(
+              visible: emailErrorMessage.isNotEmpty,
+              child: Text(
+                emailErrorMessage,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
             ),
             const SizedBox(height: 16),
-            SprinterTextField(
-              hintText: 'Password',
-              controller: passwordController,
-              obscureText: true,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: SprinterTextField(
+                hintText: 'Password',
+                controller: passwordController,
+                obscureText: true,
+              ),
+            ),
+            Visibility(
+              visible: passwordErrorMessage.isNotEmpty,
+              child: Text(
+                passwordErrorMessage,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             ),
             TextButton(
               onPressed: login,
               child: const Text('Login'),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('No account? '),
                 InkWell(
