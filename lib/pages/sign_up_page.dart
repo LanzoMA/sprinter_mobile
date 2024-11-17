@@ -36,8 +36,9 @@ class _SignUpPageState extends State<SignUpPage> {
     if (email.isEmpty) emailErrorMessage = 'No email is provided';
     if (username.isEmpty) usernameErrorMessage = 'No username is provided';
     if (password.isEmpty) passwordErrorMessage = 'No password is provided';
-    if (confirmPassword.isEmpty)
+    if (confirmPassword.isEmpty) {
       confirmPasswordErrorMessage = 'No password is provided';
+    }
 
     final bool isAnyFieldEmpty = email.isEmpty ||
         username.isEmpty ||
@@ -46,6 +47,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if (isAnyFieldEmpty) {
       setState(() {});
+      return;
+    }
+
+    if (!email.contains('@') || !email.contains('.')) {
+      setState(() {
+        emailErrorMessage = 'Please enter a valid email';
+      });
       return;
     }
 
