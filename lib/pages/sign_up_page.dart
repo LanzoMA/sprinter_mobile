@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sprinter_mobile/components/sprinter_button.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
 import 'package:sprinter_mobile/pages/home_page.dart';
 import 'package:sprinter_mobile/pages/login_page.dart';
@@ -109,12 +110,20 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Sign Up'),
+                  const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: SprinterTextField(
                       hintText: 'Email',
                       controller: emailController,
+                      icon: Icons.email,
                     ),
                   ),
                   Visibility(
@@ -126,11 +135,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: SprinterTextField(
                       hintText: 'Username',
                       controller: usernameController,
+                      icon: Icons.person,
                     ),
                   ),
                   Visibility(
@@ -142,12 +153,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: SprinterTextField(
                       hintText: 'Password',
                       obscureText: true,
                       controller: passwordController,
+                      icon: Icons.password,
                     ),
                   ),
                   Visibility(
@@ -159,12 +172,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 8),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: SprinterTextField(
                       hintText: 'Confirm Password',
                       obscureText: true,
                       controller: confirmPasswordController,
+                      icon: Icons.password,
                     ),
                   ),
                   Visibility(
@@ -176,10 +191,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  TextButton(
-                    onPressed: signUp,
-                    child: const Text('Sign Up'),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: SprinterButton(
+                      onTap: signUp,
+                      data: 'Sign Up',
+                    ),
                   ),
+                  const SizedBox(height: 32),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -196,6 +216,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           'Login',
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),

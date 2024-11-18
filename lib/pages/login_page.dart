@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sprinter_mobile/components/sprinter_button.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
 import 'package:sprinter_mobile/pages/home_page.dart';
 import 'package:sprinter_mobile/pages/sign_up_page.dart';
@@ -60,68 +61,89 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Login'),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: SprinterTextField(
-                hintText: 'Email',
-                controller: emailController,
-              ),
-            ),
-            Visibility(
-              visible: emailErrorMessage.isNotEmpty,
-              child: Text(
-                emailErrorMessage,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.error,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: SprinterTextField(
-                hintText: 'Password',
-                controller: passwordController,
-                obscureText: true,
-              ),
-            ),
-            Visibility(
-              visible: passwordErrorMessage.isNotEmpty,
-              child: Text(
-                passwordErrorMessage,
-                style: TextStyle(color: Theme.of(context).colorScheme.error),
-              ),
-            ),
-            TextButton(
-              onPressed: login,
-              child: const Text('Login'),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('No account? '),
-                InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const SignUpPage(),
-                      ),
-                    );
-                  },
-                  child: Text(
-                    'Sign up',
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Login',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 28,
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                  const SizedBox(height: 32),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: SprinterTextField(
+                        hintText: 'Email',
+                        controller: emailController,
+                        icon: Icons.email),
+                  ),
+                  Visibility(
+                    visible: emailErrorMessage.isNotEmpty,
+                    child: Text(
+                      emailErrorMessage,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: SprinterTextField(
+                      hintText: 'Password',
+                      controller: passwordController,
+                      obscureText: true,
+                      icon: Icons.password,
+                    ),
+                  ),
+                  Visibility(
+                    visible: passwordErrorMessage.isNotEmpty,
+                    child: Text(
+                      passwordErrorMessage,
+                      style:
+                          TextStyle(color: Theme.of(context).colorScheme.error),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: SprinterButton(
+                      onTap: login,
+                      data: 'Login',
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('No account? '),
+                      InkWell(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const SignUpPage(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Sign up',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
