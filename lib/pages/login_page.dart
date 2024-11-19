@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sprinter_mobile/components/sprinter_button.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
@@ -41,17 +42,23 @@ class _LoginPageState extends State<LoginPage> {
     };
 
     try {
-      await dio.post('$url/login', data: data);
+      await dio.post('/login', data: data);
 
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const HomePage(),
         ),
       );
-    } catch (error) {
-      print(error);
+    } on DioException catch (error) {
+      if (error.response != null && error.response?.statusCode == 401) {
+        setState(() {
+          passwordErrorMessage = 'Incorrect email/password';
+        });
+        return;
+      }
+
       setState(() {
-        passwordErrorMessage = 'Incorrect username/password';
+        passwordErrorMessage = 'Server currently down. Please try again later.';
       });
     }
   }

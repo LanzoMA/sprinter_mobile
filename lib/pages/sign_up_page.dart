@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:sprinter_mobile/components/sprinter_button.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
@@ -79,22 +80,26 @@ class _SignUpPageState extends State<SignUpPage> {
     };
 
     try {
-      final response = await dio.post(
-        '$url/register',
+      await dio.post(
+        '/register',
         data: data,
       );
-
-      if (response.statusCode != 200) return;
 
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => const HomePage(),
         ),
       );
-    } catch (error) {
-      print(error);
+    } on DioException catch (error) {
+      if (error.response != null && error.response?.statusCode == 400) {
+        setState(() {
+          emailErrorMessage = 'Account already registered with this email';
+        });
+        return;
+      }
       setState(() {
-        emailErrorMessage = 'Account already registered with this email';
+        confirmPasswordErrorMessage =
+            'Server currently down. Please try again later.';
       });
     }
   }
