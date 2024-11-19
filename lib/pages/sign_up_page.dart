@@ -18,15 +18,15 @@ class _SignUpPageState extends State<SignUpPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
 
-  String emailErrorMessage = '';
-  String usernameErrorMessage = '';
-  String passwordErrorMessage = '';
-  String confirmPasswordErrorMessage = '';
+  String? emailErrorMessage;
+  String? usernameErrorMessage;
+  String? passwordErrorMessage;
+  String? confirmPasswordErrorMessage;
 
   void signUp() async {
     setState(() {
       emailErrorMessage = usernameErrorMessage =
-          passwordErrorMessage = confirmPasswordErrorMessage = '';
+          passwordErrorMessage = confirmPasswordErrorMessage = null;
     });
 
     final String email = emailController.text.trim();
@@ -94,7 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
     } catch (error) {
       print(error);
       setState(() {
-        emailErrorMessage = 'Account already registed with this email';
+        emailErrorMessage = 'Account already registered with this email';
       });
     }
   }
@@ -124,15 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: 'Email',
                       controller: emailController,
                       icon: Icons.email,
-                    ),
-                  ),
-                  Visibility(
-                    visible: emailErrorMessage.isNotEmpty,
-                    child: Text(
-                      emailErrorMessage,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
+                      errorText: emailErrorMessage,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -142,15 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       hintText: 'Username',
                       controller: usernameController,
                       icon: Icons.person,
-                    ),
-                  ),
-                  Visibility(
-                    visible: usernameErrorMessage.isNotEmpty,
-                    child: Text(
-                      usernameErrorMessage,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
+                      errorText: usernameErrorMessage,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -161,15 +145,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: true,
                       controller: passwordController,
                       icon: Icons.password,
-                    ),
-                  ),
-                  Visibility(
-                    visible: passwordErrorMessage.isNotEmpty,
-                    child: Text(
-                      passwordErrorMessage,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
+                      errorText: passwordErrorMessage,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -180,15 +156,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       obscureText: true,
                       controller: confirmPasswordController,
                       icon: Icons.password,
-                    ),
-                  ),
-                  Visibility(
-                    visible: confirmPasswordErrorMessage.isNotEmpty,
-                    child: Text(
-                      confirmPasswordErrorMessage,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
+                      errorText: confirmPasswordErrorMessage,
                     ),
                   ),
                   const SizedBox(height: 8),

@@ -5,6 +5,7 @@ class SprinterTextField extends StatefulWidget {
   final bool obscureText;
   final TextEditingController controller;
   final IconData icon;
+  final String? errorText;
 
   const SprinterTextField({
     super.key,
@@ -12,6 +13,7 @@ class SprinterTextField extends StatefulWidget {
     this.obscureText = false,
     required this.controller,
     required this.icon,
+    required this.errorText,
   });
 
   @override
@@ -63,8 +65,9 @@ class _SprinterTextFieldState extends State<SprinterTextField> {
           borderSide: BorderSide.none,
         ),
         fillColor: Theme.of(context).colorScheme.surface,
-        errorText: null,
+        errorText: widget.errorText,
         suffixIcon: getSuffixIcon(),
+        suffixIconColor: Theme.of(context).colorScheme.onSurface,
       ),
     );
   }

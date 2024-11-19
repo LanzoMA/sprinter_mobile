@@ -16,12 +16,12 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  String emailErrorMessage = '';
-  String passwordErrorMessage = '';
+  String? emailErrorMessage;
+  String? passwordErrorMessage;
 
   void login() async {
     setState(() {
-      emailErrorMessage = passwordErrorMessage = '';
+      emailErrorMessage = passwordErrorMessage = null;
     });
 
     final String email = emailController.text;
@@ -78,17 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: SprinterTextField(
-                        hintText: 'Email',
-                        controller: emailController,
-                        icon: Icons.email),
-                  ),
-                  Visibility(
-                    visible: emailErrorMessage.isNotEmpty,
-                    child: Text(
-                      emailErrorMessage,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
+                      hintText: 'Email',
+                      controller: emailController,
+                      icon: Icons.email,
+                      errorText: emailErrorMessage,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -99,14 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: passwordController,
                       obscureText: true,
                       icon: Icons.password,
-                    ),
-                  ),
-                  Visibility(
-                    visible: passwordErrorMessage.isNotEmpty,
-                    child: Text(
-                      passwordErrorMessage,
-                      style:
-                          TextStyle(color: Theme.of(context).colorScheme.error),
+                      errorText: passwordErrorMessage,
                     ),
                   ),
                   const SizedBox(height: 8),
