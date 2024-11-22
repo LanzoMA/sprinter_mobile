@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sprinter_mobile/components/sprinter_button.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
 import 'package:sprinter_mobile/utils/dio.dart';
+import 'package:sprinter_mobile/utils/secure_storage.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -22,6 +23,31 @@ class _SignUpPageState extends State<SignUpPage> {
   String? usernameErrorMessage;
   String? passwordErrorMessage;
   String? confirmPasswordErrorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(
+      () => setState(
+        () => emailErrorMessage = null,
+      ),
+    );
+    usernameController.addListener(
+      () => setState(
+        () => usernameErrorMessage = null,
+      ),
+    );
+    passwordController.addListener(
+      () => setState(
+        () => passwordErrorMessage = null,
+      ),
+    );
+    confirmPasswordController.addListener(
+      () => setState(
+        () => confirmPasswordErrorMessage = null,
+      ),
+    );
+  }
 
   void signUp() async {
     setState(() {
@@ -79,12 +105,16 @@ class _SignUpPageState extends State<SignUpPage> {
     };
 
     try {
-      await dio.post(
+      final response = await dio.post(
         '/register',
         data: data,
       );
 
-      context.go('/home');
+      final accessToken = response.data['accessToken'];
+
+      await storeAccessToken(accessToken);
+
+      context.go('/settings');
     } on DioException catch (error) {
       if (error.response != null && error.response?.statusCode == 400) {
         setState(() {
