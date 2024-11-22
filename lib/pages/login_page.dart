@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sprinter_mobile/components/sprinter_button.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
-import 'package:sprinter_mobile/pages/home_page.dart';
-import 'package:sprinter_mobile/pages/sign_up_page.dart';
 import 'package:sprinter_mobile/utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,13 +41,9 @@ class _LoginPageState extends State<LoginPage> {
     };
 
     try {
-      await dio.post('/login', data: data);
+      final response = await dio.post('/login', data: data);
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const HomePage(),
-        ),
-      );
+      context.go('/home');
     } on DioException catch (error) {
       if (error.response != null && error.response?.statusCode == 401) {
         setState(() {
@@ -117,11 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                       const Text('No account? '),
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const SignUpPage(),
-                            ),
-                          );
+                          context.go('/signup');
                         },
                         child: Text(
                           'Sign up',

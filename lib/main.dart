@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sprinter_mobile/pages/login_page.dart';
-import 'package:sprinter_mobile/themes.dart';
+import 'package:sprinter_mobile/utils/router.dart';
+import 'package:sprinter_mobile/utils/themes.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,8 +11,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const LoginPage(),
+    return MaterialApp.router(
+      routerConfig: router,
       theme: lightTheme,
       darkTheme: darkTheme,
       debugShowCheckedModeBanner: false,
