@@ -20,9 +20,10 @@ class SprinterButton extends StatelessWidget {
         ),
         child: Text(
           data,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
         ),
       ),
