@@ -84,6 +84,13 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
+    if (username.contains(' ')) {
+      setState(() {
+        usernameErrorMessage = 'Usernames cannot contain spaces';
+      });
+      return;
+    }
+
     if (password != confirmPassword) {
       setState(() {
         confirmPasswordErrorMessage = 'Passwords do not match';
