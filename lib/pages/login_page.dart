@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sprinter_mobile/components/sprinter_button.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
-import 'package:sprinter_mobile/utils/constants.dart';
+import 'package:sprinter_mobile/utils/dio.dart';
+import 'package:sprinter_mobile/utils/secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -43,7 +44,11 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final response = await dio.post('/login', data: data);
 
-      context.go('/home');
+      final accessToken = response.data['accessToken'];
+
+      await storeAccessToken(accessToken);
+
+      context.go('/settings');
     } on DioException catch (error) {
       if (error.response != null && error.response?.statusCode == 401) {
         setState(() {

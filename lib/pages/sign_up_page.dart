@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sprinter_mobile/components/sprinter_button.dart';
 import 'package:sprinter_mobile/components/sprinter_text_field.dart';
-import 'package:sprinter_mobile/utils/constants.dart';
+import 'package:sprinter_mobile/utils/dio.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
