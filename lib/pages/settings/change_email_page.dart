@@ -21,6 +21,7 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
   @override
   void initState() {
     super.initState();
+    // Clears any errors once the user starts making edits to email text field
     newEmailController.addListener(
       () => setState(
         () => newEmailErrorText = null,
@@ -90,27 +91,29 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 16),
-            const Text(
-              'Change Email',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const Text(
+                  'Change Email',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+                ),
+                const SizedBox(height: 32),
+                SprinterTextField(
+                  hintText: 'New Email',
+                  controller: newEmailController,
+                  icon: Icons.email,
+                  errorText: newEmailErrorText,
+                ),
+                const SizedBox(height: 32),
+                SprinterButton(
+                  onTap: changeEmail,
+                  data: 'Change Email',
+                ),
+              ],
             ),
-            const SizedBox(height: 16),
-            SprinterTextField(
-              hintText: 'New Email',
-              controller: newEmailController,
-              icon: Icons.email,
-              errorText: newEmailErrorText,
-            ),
-            const SizedBox(height: 16),
-            SprinterButton(
-              onTap: changeEmail,
-              data: 'Change Email',
-            ),
-          ],
+          ),
         ),
       ),
     );
