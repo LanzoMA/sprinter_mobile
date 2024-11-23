@@ -24,7 +24,6 @@ class AccountSettingTile extends StatelessWidget {
         ),
       ),
       trailing: const Icon(Icons.arrow_forward_ios),
-      // tileColor: Theme.of(context).colorScheme.surface,
       onTap: onTap,
     );
   }
