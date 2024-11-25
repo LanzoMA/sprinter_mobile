@@ -40,12 +40,14 @@ class _ChangeEmailPageState extends State<ChangeEmailPage> {
       setState(() {
         newEmailErrorText = 'New email not provided';
       });
+      return;
     }
 
     if (!newEmail.contains('@') || !newEmail.contains('.')) {
       setState(() {
         newEmailErrorText = 'Please enter a valid email address';
       });
+      return;
     }
 
     final Map<String, String> data = {
